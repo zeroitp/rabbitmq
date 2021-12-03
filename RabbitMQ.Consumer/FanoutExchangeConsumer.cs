@@ -19,16 +19,20 @@ namespace RabbitMQ.Consumer
 
 
             channel.QueueBind("demo-fanout-queue", "demo-fanout-exchange", string.Empty);
-            channel.BasicQos(0, 10, false);
+            //channel.BasicQos(0, 10, false); // <- disable for demo custom ack
 
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += (sender, e) => {
-                var body = e.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
-                Console.WriteLine($"{message} recieved time: {DateTime.Now.ToString("HH:mm:ss:ffff")}");
+                //var body = e.Body.ToArray();
+                //var message = Encoding.UTF8.GetString(body);
+                //Console.WriteLine($"{message} recieved time: {DateTime.Now.ToString("HH:mm:ss:ffff")}");
+
+                //demo custom ack
+                //channel.BasicAck(e.DeliveryTag, false);
+                throw new Exception("Hey man, error here!");
             };
 
-            channel.BasicConsume("demo-fanout-queue", true, consumer);
+            channel.BasicConsume("demo-fanout-queue", false, consumer); // <- update auto nack : false
             Console.WriteLine("Fanout consumer started");
             Console.ReadLine();
         }
