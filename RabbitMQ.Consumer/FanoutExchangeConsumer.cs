@@ -17,6 +17,10 @@ namespace RabbitMQ.Consumer
                 autoDelete: false,
                 arguments: null);
 
+            var options = new Dictionary<string, object>()
+            {
+                { "x-queue-mode", "lazy" }
+            };
 
             channel.QueueBind("demo-fanout-queue", "demo-fanout-exchange", string.Empty);
             channel.BasicQos(0, 10, false);
