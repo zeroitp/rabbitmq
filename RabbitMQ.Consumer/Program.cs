@@ -13,11 +13,12 @@ namespace RabbitMQ.Consumer
             };
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            FanoutExchangeConsumer.Consume(channel);
+            //FanoutExchangeConsumer.Consume(channel);
             //TopicExchangeConsumer.Consume(channel);
             //HeaderExchangeConsumer.Consume(channel);
             //DirectExchangeConsumer.Consume(channel);
             //QueueConsumer.Consume(channel);
+            DeadLetterExchangeConsumer.Consume(channel);
         }
     }
 }
