@@ -13,11 +13,12 @@ namespace RabbitMQ.Producer
             };
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            FanoutExchangePublisher.Publish(channel);
+            //FanoutExchangePublisher.Publish(channel);
             //DirectExchangePublisher.Publish(channel);
             //TopicExchangePublisher.Publish(channel);
             //HeaderExchangePublisher.Publish(channel);
             //QueueProducer.Publish(channel);
+            DeadLetterExchangePublisher.Publish(channel);
         }
     }
 }
